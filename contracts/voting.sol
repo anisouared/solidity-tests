@@ -119,10 +119,15 @@ contract Voting is Ownable {
             "Voting is not yet allowed."
         );
         require(
+            Voters[msg.sender].hasVoted == false,
+            "The user has already voted"
+        );
+        require(
             _votedProporalId < Proposals.length,
             "The vote must correspond to the proposals."
         );
 
+        Voters[msg.sender].hasVoted = true;
         Voters[msg.sender].votedProporalId = _votedProporalId;
 
         Proposal memory proposalVoted = Proposals[_votedProporalId];
